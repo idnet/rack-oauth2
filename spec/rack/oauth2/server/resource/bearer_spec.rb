@@ -58,6 +58,11 @@ describe Rack::OAuth2::Server::Resource::Bearer do
       it_behaves_like :authenticated_bearer_request
     end
 
+    context 'when token is in Authorization header' do
+      let(:env) { Rack::MockRequest.env_for('/protected_resource', 'HTTP_AUTHORIZATION' => 'OAuth valid_token') }
+      it_behaves_like :authenticated_bearer_request
+    end
+
     context 'when token is in params' do
       let(:env) { Rack::MockRequest.env_for('/protected_resource', :params => {:access_token => 'valid_token'}) }
       it_behaves_like :authenticated_bearer_request
